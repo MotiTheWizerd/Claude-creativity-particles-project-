@@ -1,0 +1,403 @@
+/* ─── Panel Container ─────────────────────────── */
+
+.panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background: rgba(8, 5, 18, 0.9);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.panel-header {
+  padding: 20px 20px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.panel-title {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 6px;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0;
+}
+
+/* ─── Tabs ────────────────────────────────────── */
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tab {
+  flex: 1;
+  padding: 10px 0;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab:hover {
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tab.active {
+  color: rgba(140, 160, 255, 0.9);
+  border-bottom-color: rgba(140, 160, 255, 0.6);
+}
+
+/* ─── Tab Body ────────────────────────────────── */
+
+.tab-body {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+.tab-body::-webkit-scrollbar { width: 4px; }
+.tab-body::-webkit-scrollbar-track { background: transparent; }
+.tab-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+.tab-content {
+  padding: 12px 16px;
+}
+
+/* ─── Sections ────────────────────────────────── */
+
+.section {
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.section:last-child { border-bottom: none; }
+
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(140, 160, 255, 0.5);
+  margin-bottom: 10px;
+}
+
+/* ─── Add Row ─────────────────────────────────── */
+
+.add-row {
+  display: flex;
+  gap: 8px;
+}
+
+.select {
+  flex: 1;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+}
+
+.select option {
+  background: #1a1a2e;
+  color: #fff;
+}
+
+/* ─── Buttons ─────────────────────────────────── */
+
+.btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.5px;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-add {
+  background: rgba(80, 140, 255, 0.15);
+  border-color: rgba(80, 140, 255, 0.3);
+  color: rgba(140, 180, 255, 0.9);
+  white-space: nowrap;
+}
+
+.btn-add:hover {
+  background: rgba(80, 140, 255, 0.25);
+}
+
+.btn-play {
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  margin-bottom: 10px;
+  background: rgba(60, 200, 120, 0.12);
+  border-color: rgba(60, 200, 120, 0.3);
+  color: rgba(100, 220, 150, 0.9);
+}
+
+.btn-play:hover {
+  background: rgba(60, 200, 120, 0.22);
+}
+
+.btn-play.playing {
+  background: rgba(255, 160, 60, 0.12);
+  border-color: rgba(255, 160, 60, 0.3);
+  color: rgba(255, 180, 100, 0.9);
+}
+
+/* ─── Body List ───────────────────────────────── */
+
+.body-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.08) transparent;
+}
+
+.body-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.body-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.body-item.selected {
+  background: rgba(140, 160, 255, 0.1);
+  outline: 1px solid rgba(140, 160, 255, 0.2);
+}
+
+.body-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.body-name {
+  flex: 1;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.body-type {
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.btn-remove {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 60, 60, 0.15);
+  color: rgba(255, 100, 100, 0.7);
+  font-size: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.body-item:hover .btn-remove { opacity: 1; }
+.btn-remove:hover { background: rgba(255, 60, 60, 0.3); }
+
+.empty-msg {
+  text-align: center;
+  padding: 16px;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 12px;
+}
+
+/* ─── Fields & Sliders ────────────────────────── */
+
+.field {
+  display: grid;
+  grid-template-columns: 65px 1fr 38px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 11px;
+}
+
+.field > span:first-child {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.field-value {
+  text-align: right;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.3);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+.input {
+  width: 100%;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(140, 160, 255, 0.4);
+}
+
+.color-picker {
+  width: 100%;
+  height: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.toggle-field {
+  grid-template-columns: 65px 1fr;
+}
+
+.toggle-field input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: rgba(140, 160, 255, 0.7);
+}
+
+/* ─── Range Inputs ────────────────────────────── */
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(140, 160, 255, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: rgba(160, 180, 255, 1);
+  transform: scale(1.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(140, 160, 255, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+}
+
+/* ─── Presets ─────────────────────────────────── */
+
+.preset-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn-preset {
+  width: 100%;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-preset:hover {
+  background: rgba(140, 160, 255, 0.1);
+  border-color: rgba(140, 160, 255, 0.25);
+  color: rgba(255, 255, 255, 0.85);
+  transform: translateX(4px);
+}
+
+.preset-hint {
+  padding: 12px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.2);
+  line-height: 1.5;
+}
+
+/* ─── Stats ───────────────────────────────────── */
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stats > div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.stats > div > span:first-child {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.stats > div > span:last-child {
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
