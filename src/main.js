@@ -13,7 +13,8 @@ import {
 
 // ─── Config ───────────────────────────────────────────────
 const PARTICLE_COUNT = 18000;
-const MORPH_DURATION = 2.0; // seconds
+let morphDuration = 2.0;
+let maxMouseInfluence = 0.5;
 
 // ─── Scene Setup ──────────────────────────────────────────
 const canvas = document.getElementById('canvas');
@@ -54,6 +55,11 @@ const vertexShader = /* glsl */ `
   uniform vec2 uMouse;
   uniform float uMouseInfluence;
   uniform float uRotationSpeed;
+  uniform float uHueOffset;
+  uniform float uSatBase;
+  uniform float uSizeScale;
+  uniform float uBrightness;
+  uniform float uColorSpeed;
 
   varying float vDistance;
   varying float vRandom;
@@ -149,13 +155,13 @@ const vertexShader = /* glsl */ `
 
     // Pull particles toward mouse in screen space
     vec2 pullDir = normalize(uMouse - screenPos + 0.001) * mousePull;
-    rotated.x += pullDir.x * 3.0;
-    rotated.y += pullDir.y * 3.0;
+    rotated.x += pullDir.x * 1.5;
+    rotated.y += pullDir.y * 1.5;
 
     // Color based on position and time
-    float hue = fract(length(rotated.xz) * 0.05 + uTime * 0.03 + randomSeed * 0.3);
-    float sat = 0.7 + sin(uTime + randomSeed * 6.28) * 0.3;
-    float val = 0.3 + mousePull * 1.0;
+    float hue = fract(length(rotated.xz) * 0.05 + uTime * uColorSpeed + randomSeed * 0.3 + uHueOffset);
+    float sat = uSatBase + sin(uTime + randomSeed * 6.28) * 0.3;
+    float val = uBrightness + mousePull * 0.12;
 
     // HSV to RGB
     vec3 c = vec3(hue, sat, val);
@@ -168,8 +174,8 @@ const vertexShader = /* glsl */ `
     vec4 mvPosition = viewMatrix * modelMatrix * vec4(rotated, 1.0);
 
     // Size attenuation
-    float sizeAtten = size * (150.0 / -mvPosition.z);
-    sizeAtten *= (1.0 + mousePull * 3.0); // grow near mouse
+    float sizeAtten = size * uSizeScale * (150.0 / -mvPosition.z);
+    sizeAtten *= (1.0 + mousePull * 0.4); // subtle grow near mouse
     gl_PointSize = max(sizeAtten, 0.5);
 
     gl_Position = projectionMatrix * mvPosition;
@@ -177,6 +183,8 @@ const vertexShader = /* glsl */ `
 `;
 
 const fragmentShader = /* glsl */ `
+  uniform float uOpacity;
+
   varying float vDistance;
   varying float vRandom;
   varying vec3 vColor;
@@ -202,7 +210,7 @@ const fragmentShader = /* glsl */ `
     float distFade = 1.0 - smoothstep(10.0, 80.0, vDistance);
     alpha *= distFade * 0.5;
 
-    gl_FragColor = vec4(color, alpha);
+    gl_FragColor = vec4(color, alpha * uOpacity);
   }
 `;
 
@@ -249,6 +257,12 @@ const material = new THREE.ShaderMaterial({
     uMouse: { value: new THREE.Vector2(0, 0) },
     uMouseInfluence: { value: 0.0 },
     uRotationSpeed: { value: 0.08 },
+    uHueOffset: { value: 0.0 },
+    uSatBase: { value: 0.7 },
+    uSizeScale: { value: 1.0 },
+    uBrightness: { value: 0.3 },
+    uColorSpeed: { value: 0.03 },
+    uOpacity: { value: 1.0 },
   },
   transparent: true,
   depthWrite: false,
@@ -290,7 +304,7 @@ canvas.addEventListener('mousemove', (e) => {
   mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
   mouse.active = true;
-  targetMouseInfluence = 0.5;
+  targetMouseInfluence = maxMouseInfluence;
 });
 
 canvas.addEventListener('mouseleave', () => {
@@ -402,7 +416,7 @@ function animate() {
   // Morph progress
   if (morphing) {
     const morphElapsed = performance.now() / 1000 - morphStartTime;
-    const progress = Math.min(morphElapsed / MORPH_DURATION, 1.0);
+    const progress = Math.min(morphElapsed / morphDuration, 1.0);
     material.uniforms.uMorphProgress.value = progress;
 
     if (progress >= 1.0) {
@@ -445,6 +459,72 @@ window.addEventListener('resize', () => {
   renderer.setSize(w, h);
   composer.setSize(w, h);
   bloomPass.resolution.set(w, h);
+});
+
+// ─── Dashboard ────────────────────────────────────────────
+const dashboard = document.getElementById('dashboard');
+const dashToggle = document.getElementById('dashboard-toggle');
+
+dashToggle.addEventListener('click', () => {
+  dashboard.classList.toggle('closed');
+  dashToggle.classList.toggle('open');
+});
+
+// Default values for reset
+const defaults = {
+  'bloom-strength': 0.6, 'bloom-radius': 0.4, 'bloom-threshold': 0.85,
+  'particle-size': 1, 'particle-brightness': 0.3, 'particle-opacity': 1,
+  'color-hue': 0, 'color-saturation': 0.7, 'color-speed': 0.03,
+  'motion-rotation': 0.08, 'motion-mouse': 0.5, 'motion-morph': 2,
+  'scene-exposure': 0.5, 'scene-fog': 0.015,
+};
+
+// Update value display for all sliders
+function updateValueDisplay(input) {
+  const display = document.querySelector(`.dash-value[data-for="${input.id}"]`);
+  if (display) display.textContent = parseFloat(input.value).toFixed(2);
+}
+
+// Apply a slider value to the scene
+function applySlider(id, val) {
+  switch (id) {
+    case 'bloom-strength': bloomPass.strength = val; break;
+    case 'bloom-radius': bloomPass.radius = val; break;
+    case 'bloom-threshold': bloomPass.threshold = val; break;
+    case 'particle-size': material.uniforms.uSizeScale.value = val; break;
+    case 'particle-brightness': material.uniforms.uBrightness.value = val; break;
+    case 'particle-opacity': material.uniforms.uOpacity.value = val; break;
+    case 'color-hue': material.uniforms.uHueOffset.value = val; break;
+    case 'color-saturation': material.uniforms.uSatBase.value = val; break;
+    case 'color-speed': material.uniforms.uColorSpeed.value = val; break;
+    case 'motion-rotation': material.uniforms.uRotationSpeed.value = val; break;
+    case 'motion-mouse': maxMouseInfluence = val; break;
+    case 'motion-morph': morphDuration = val; break;
+    case 'scene-exposure': renderer.toneMappingExposure = val; break;
+    case 'scene-fog': scene.fog.density = val; break;
+  }
+}
+
+// Wire up all sliders
+document.querySelectorAll('.dash-slider input[type="range"]').forEach((input) => {
+  updateValueDisplay(input);
+  input.addEventListener('input', () => {
+    const val = parseFloat(input.value);
+    updateValueDisplay(input);
+    applySlider(input.id, val);
+  });
+});
+
+// Reset button
+document.getElementById('dash-reset').addEventListener('click', () => {
+  for (const [id, val] of Object.entries(defaults)) {
+    const input = document.getElementById(id);
+    if (input) {
+      input.value = val;
+      updateValueDisplay(input);
+      applySlider(id, val);
+    }
+  }
 });
 
 // ─── Start ────────────────────────────────────────────────

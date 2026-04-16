@@ -25,6 +25,111 @@
       <span>Scroll to zoom</span>
     </div>
   </div>
+  <!-- Dashboard Toggle -->
+  <button id="dashboard-toggle" title="Toggle Controls">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+    </svg>
+  </button>
+
+  <!-- Dashboard Panel -->
+  <div id="dashboard" class="dashboard closed">
+    <div class="dash-header">
+      <span class="dash-title">CONTROLS</span>
+      <button id="dash-reset" class="dash-reset-btn" title="Reset All">Reset</button>
+    </div>
+
+    <div class="dash-group">
+      <div class="dash-group-label">Bloom</div>
+      <label class="dash-slider">
+        <span>Strength</span>
+        <input type="range" id="bloom-strength" min="0" max="3" step="0.05" value="0.6" />
+        <span class="dash-value" data-for="bloom-strength">0.6</span>
+      </label>
+      <label class="dash-slider">
+        <span>Radius</span>
+        <input type="range" id="bloom-radius" min="0" max="2" step="0.05" value="0.4" />
+        <span class="dash-value" data-for="bloom-radius">0.4</span>
+      </label>
+      <label class="dash-slider">
+        <span>Threshold</span>
+        <input type="range" id="bloom-threshold" min="0" max="1.5" step="0.05" value="0.85" />
+        <span class="dash-value" data-for="bloom-threshold">0.85</span>
+      </label>
+    </div>
+
+    <div class="dash-group">
+      <div class="dash-group-label">Particles</div>
+      <label class="dash-slider">
+        <span>Size</span>
+        <input type="range" id="particle-size" min="0.1" max="3" step="0.05" value="1" />
+        <span class="dash-value" data-for="particle-size">1.0</span>
+      </label>
+      <label class="dash-slider">
+        <span>Brightness</span>
+        <input type="range" id="particle-brightness" min="0.05" max="1" step="0.01" value="0.3" />
+        <span class="dash-value" data-for="particle-brightness">0.3</span>
+      </label>
+      <label class="dash-slider">
+        <span>Opacity</span>
+        <input type="range" id="particle-opacity" min="0.1" max="1" step="0.01" value="1" />
+        <span class="dash-value" data-for="particle-opacity">1.0</span>
+      </label>
+    </div>
+
+    <div class="dash-group">
+      <div class="dash-group-label">Colors</div>
+      <label class="dash-slider">
+        <span>Hue Shift</span>
+        <input type="range" id="color-hue" min="0" max="1" step="0.01" value="0" />
+        <span class="dash-value" data-for="color-hue">0.0</span>
+      </label>
+      <label class="dash-slider">
+        <span>Saturation</span>
+        <input type="range" id="color-saturation" min="0" max="1" step="0.01" value="0.7" />
+        <span class="dash-value" data-for="color-saturation">0.7</span>
+      </label>
+      <label class="dash-slider">
+        <span>Cycle Speed</span>
+        <input type="range" id="color-speed" min="0" max="0.2" step="0.005" value="0.03" />
+        <span class="dash-value" data-for="color-speed">0.03</span>
+      </label>
+    </div>
+
+    <div class="dash-group">
+      <div class="dash-group-label">Motion</div>
+      <label class="dash-slider">
+        <span>Rotation</span>
+        <input type="range" id="motion-rotation" min="0" max="0.5" step="0.005" value="0.08" />
+        <span class="dash-value" data-for="motion-rotation">0.08</span>
+      </label>
+      <label class="dash-slider">
+        <span>Mouse Pull</span>
+        <input type="range" id="motion-mouse" min="0" max="2" step="0.05" value="0.5" />
+        <span class="dash-value" data-for="motion-mouse">0.5</span>
+      </label>
+      <label class="dash-slider">
+        <span>Morph Speed</span>
+        <input type="range" id="motion-morph" min="0.3" max="6" step="0.1" value="2" />
+        <span class="dash-value" data-for="motion-morph">2.0</span>
+      </label>
+    </div>
+
+    <div class="dash-group">
+      <div class="dash-group-label">Scene</div>
+      <label class="dash-slider">
+        <span>Exposure</span>
+        <input type="range" id="scene-exposure" min="0.1" max="2" step="0.05" value="0.5" />
+        <span class="dash-value" data-for="scene-exposure">0.5</span>
+      </label>
+      <label class="dash-slider">
+        <span>Fog</span>
+        <input type="range" id="scene-fog" min="0" max="0.06" step="0.002" value="0.015" />
+        <span class="dash-value" data-for="scene-fog">0.015</span>
+      </label>
+    </div>
+  </div>
+
   <canvas id="canvas"></canvas>
   <script type="module" src="/src/main.js"></script>
 </body>
