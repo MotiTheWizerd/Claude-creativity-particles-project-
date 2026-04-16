@@ -1,0 +1,24 @@
+{
+  "session_id": "threejs-particle-universe-001",
+  "project_name": "Particle Universe",
+  "started_at": "2026-04-16T04:15:00Z",
+  "description": "Interactive 3D particle UI built with Three.js — 18,000 particles that morph between 6 formations (Galaxy, DNA, Tornado, Heart, Sphere, Cube) with mouse interaction, bloom post-processing, and custom GLSL shaders",
+  "authors": ["Moti", "Claude"],
+  "tech_stack": ["Three.js", "Vite", "GLSL Shaders", "Post-processing"],
+  "status": "in_progress",
+  "current_focus": "Initial build — particle system with shape morphing",
+  "features_completed": [
+    "Vite project setup",
+    "Custom vertex/fragment shaders with simplex noise",
+    "6 particle formations (galaxy, dna, tornado, heart, sphere, cube)",
+    "Smooth morphing transitions between shapes",
+    "Mouse gravity well interaction",
+    "Bloom post-processing (UnrealBloomPass)",
+    "Auto-rotating camera with drag orbit + scroll zoom",
+    "Background star field",
+    "Additive blending for glow effect",
+    "UI overlay with shape buttons"
+  ],
+  "features_planned": [],
+  "notes": "First session — fresh project, going creative and wild with particles!"
+}

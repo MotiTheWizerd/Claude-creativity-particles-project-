@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Particle Universe</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div id="ui-overlay">
+    <h1 class="title">PARTICLE UNIVERSE</h1>
+    <div class="controls">
+      <button class="shape-btn active" data-shape="galaxy">Galaxy</button>
+      <button class="shape-btn" data-shape="dna">DNA</button>
+      <button class="shape-btn" data-shape="tornado">Tornado</button>
+      <button class="shape-btn" data-shape="heart">Heart</button>
+      <button class="shape-btn" data-shape="sphere">Sphere</button>
+      <button class="shape-btn" data-shape="cube">Cube</button>
+    </div>
+    <div class="info">
+      <span>Move mouse to interact</span>
+      <span class="separator">|</span>
+      <span>Click shape to morph</span>
+      <span class="separator">|</span>
+      <span>Scroll to zoom</span>
+    </div>
+  </div>
+  <canvas id="canvas"></canvas>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
